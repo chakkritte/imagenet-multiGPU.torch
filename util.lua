@@ -45,6 +45,7 @@ function saveDataParallel(filename, model)
    end
 end
 
+
 function loadDataParallel(filename, nGPU)
    if opt.backend == 'cudnn' then
       require 'cudnn'
@@ -62,4 +63,17 @@ function loadDataParallel(filename, nGPU)
    else
       error('The loaded model is not a Sequential or DataParallelTable module.')
    end
+end
+
+
+function savePackModel(filename,mean,model,classes)
+   local transform = torch.load(mean)
+   local model = torch.load(model):float()
+   local synset_words = torch.load(classes)
+   net = {
+     model = model,
+     transform = transform,
+     label = synset_words
+   }
+   torch.save(filename, net)
 end
