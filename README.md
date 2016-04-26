@@ -109,7 +109,7 @@ local image_name = paths.basename(image_url)
 if not paths.filep(image_name) then os.execute('wget '..image_url)   end
 
 print '==> Loading network'
-local net = torch.load('packModel.got'):unpack():float()
+local net = torch.load('packModel_1.got')
 net.model:evaluate()
 print(net)
 
