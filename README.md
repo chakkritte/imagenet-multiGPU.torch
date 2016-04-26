@@ -84,7 +84,7 @@ predictions = model:forward(img:cuda())
 ```
 
 
-Use classify sigle image without cuda
+Use classify sigle image without cuda.
 ```
 -- Imagenet classification with Torch7 demo
 --
