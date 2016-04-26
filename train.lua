@@ -127,10 +127,8 @@ function train()
    -- clear the intermediate states in the model before saving to disk
    -- this saves lots of disk space
    model:clearState()
-   saveDataParallel(paths.concat(opt.save, 'model_' .. epoch .. '.t7'), model) -- defined in util.lua
-   savePackModel(paths.concat(opt.save, 'packModel_' .. epoch .. '.got'),paths.concat(opt.cache, 'meanstdCache.t7'),paths.concat(opt.save, 'model_' .. epoch .. '.t7'),paths.concat(opt.save, 'classes.t7'))
-
-
+   --saveDataParallel(paths.concat(opt.save, 'model_' .. epoch .. '.t7'), model) -- defined in util.lua
+   saveDataParallelWithPack(paths.concat(opt.save, 'model_' .. epoch .. '.t7'), model , paths.concat(opt.save, 'packModel_' .. epoch .. '.got') , paths.concat(opt.cache, 'meanstdCache.t7'), paths.concat(opt.save, 'classes.t7')) 
    torch.save(paths.concat(opt.save, 'optimState_' .. epoch .. '.t7'), optimState)
 end -- of train()
 -------------------------------------------------------------------------------------------
