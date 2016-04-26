@@ -46,6 +46,31 @@ function saveDataParallel(filename, model)
 end
 
 
+
+
+function saveDataParallelWithPack(filename, model , packname , mean , classes)
+   if torch.type(model) == 'nn.DataParallelTable' then
+      torch.save(filename, cleanDPT(model))
+      savePackModel(packname , mean , filename ,classes)
+   elseif torch.type(model) == 'nn.Sequential' then
+      local temp_model = nn.Sequential()
+      for i, module in ipairs(model.modules) do
+         if torch.type(module) == 'nn.DataParallelTable' then
+            temp_model:add(cleanDPT(module))
+         else
+            temp_model:add(module)
+         end
+      end
+      torch.save(filename, temp_model)
+      savePackModel(packname , mean , filename ,classes)
+--      savePackModel(paths.concat(opt.save, 'packModel_' .. epoch .. '.got'),paths.concat(opt.cache, 'meanstdCache.t7'), filename , paths.concat(opt.save, 'classes.t7'))
+   else
+      error('This saving function only works with Sequential or DataParallelTable modules.')
+   end
+end
+
+   
+
 function loadDataParallel(filename, nGPU)
    if opt.backend == 'cudnn' then
       require 'cudnn'
