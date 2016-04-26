@@ -122,7 +122,7 @@ print('ImageNet ', net.transform)
 local I = preprocess(im, net.transform):view(1,3,224,224):float()
 
 print 'Propagate through the network, sort outputs in decreasing order and show 5 best classes'
-local _,classes = net.model:forward(I):view(-1):sort(true)
+local _,classes = net.model:forward(I):view(-1):float():sort(true)
 for i=1,5 do
   print('predicted class '..tostring(i)..': ', net.label[classes[i] ])
 end
