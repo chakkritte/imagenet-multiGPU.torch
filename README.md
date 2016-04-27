@@ -133,6 +133,7 @@ If you ever want to reuse this example, and debug your scripts, it is suggested 
 th main.lua -nDonkeys 0 [...options...]
 ```
 
+
 ### Code Description
 - `main.lua` (~30 lines) - loads all other files, starts training.
 - `opts.lua` (~50 lines) - all the command-line options and description
